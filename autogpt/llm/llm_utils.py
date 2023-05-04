@@ -161,6 +161,10 @@ def create_chat_completion(
                     max_tokens=max_tokens,
                 )
             else:
+                if cfg.debug_mode:
+                    print(
+                        f"{Fore.GREEN}api_manager.create_chat_completion:{Fore.RESET}\nmessages={messages}"
+                    )
                 response = api_manager.create_chat_completion(
                     model=model,
                     messages=messages,

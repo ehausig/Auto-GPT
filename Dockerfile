@@ -26,14 +26,17 @@ ENTRYPOINT ["python", "-m", "autogpt"]
 
 # dev build -> include everything
 FROM autogpt-base as autogpt-dev
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+	pip install "weaviate-client>=3.15.4"
 WORKDIR /app
 ONBUILD COPY . ./
 
 # release build -> include bare minimum
 FROM autogpt-base as autogpt-release
 RUN sed -i '/Items below this point will not be included in the Docker Image/,$d' requirements.txt && \
-	pip install --no-cache-dir -r requirements.txt
+	pip install --no-cache-dir -r requirements.txt && \
+        mkdir -p /path/to/local/clone/directory
+# above is workaround for git clone
 WORKDIR /app
 ONBUILD COPY autogpt/ ./autogpt
 
