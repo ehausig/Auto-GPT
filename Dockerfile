@@ -39,5 +39,7 @@ RUN sed -i '/Items below this point will not be included in the Docker Image/,$d
 # above is workaround for git clone
 WORKDIR /app
 ONBUILD COPY autogpt/ ./autogpt
+ONBUILD COPY scripts/ ./scripts
+
 
 FROM autogpt-${BUILD_TYPE} AS auto-gpt
